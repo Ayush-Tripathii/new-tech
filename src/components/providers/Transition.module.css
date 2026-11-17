@@ -1,0 +1,41 @@
+.sheets {
+  position: fixed;
+  inset: 0;
+  z-index: 9400;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  pointer-events: none;
+  visibility: hidden;
+}
+.sheet {
+  position: relative;
+  background: var(--paper-raise);
+  /* leading-edge elevation: reads as a sheet sliding over a sheet */
+  box-shadow: var(--elev-2);
+  transform: scaleY(0);
+  margin-right: -1px;
+}
+.sheet::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -24px;
+  height: 24px;
+  background: linear-gradient(hsl(var(--sh) / 0.09), transparent);
+  pointer-events: none;
+}
+.label {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9450;
+  pointer-events: none;
+  display: flex;
+  overflow: clip;
+  color: var(--ink);
+}
+.label span {
+  display: inline-block;
+}

@@ -1,0 +1,170 @@
+.hero {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  min-height: 560px;
+  z-index: 0;
+  overflow: clip;
+}
+.stage {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 30%;
+  background: var(--paper);
+}
+.canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  touch-action: pan-y;
+  opacity: 0;
+}
+.canvasEl {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.layer {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+.layer a,
+.layer button {
+  pointer-events: auto;
+}
+.copy {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: clamp(32px, 6vh, 72px);
+  padding-top: calc(var(--header-h) + 24px);
+}
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink-mid);
+  margin-bottom: clamp(16px, 3vh, 32px);
+}
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--signal);
+  box-shadow: 0 0 0 3px var(--signal-soft);
+}
+/* Headline sits on the bright cyclorama region and holds at --ink, no blend:
+   verified 15.9:1 on #F7F6F3 and ≥14:1 on the darkest cyc falloff (~#EEECE8). */
+.title {
+  color: var(--ink);
+  max-width: 11ch;
+  font-weight: 330;
+}
+.foot {
+  margin-top: clamp(20px, 4vh, 44px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--gutter);
+  flex-wrap: wrap;
+}
+.lede {
+  max-width: 44ch;
+  color: var(--ink-mid);
+  font-size: clamp(1rem, 1.15vw, 1.1875rem);
+  line-height: 1.6;
+}
+.ctas {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.cues {
+  position: absolute;
+  right: var(--margin);
+  top: calc(var(--header-h) + 28px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  color: var(--ink-faint);
+}
+.cues i {
+  font-style: normal;
+  display: inline-block;
+  width: 1.4em;
+  text-align: center;
+}
+.meta {
+  position: absolute;
+  left: var(--margin);
+  top: calc(var(--header-h) + 28px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--ink-faint);
+}
+
+/* Datum lines */
+.datum {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.datumLine {
+  stroke: var(--ink);
+  stroke-opacity: 0.32;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+.datumTick {
+  stroke: var(--ink);
+  stroke-opacity: 0.45;
+  stroke-width: 1;
+  opacity: 0;
+}
+.datumLabel {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  fill: var(--ink-faint);
+  opacity: 0;
+}
+.datumHit {
+  stroke: transparent;
+  stroke-width: 24;
+  pointer-events: stroke;
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: clamp(3.25rem, 15vw, 6rem);
+  }
+  /* phones: the object speaks for itself — datum ornament and cues would crowd it */
+  .datum,
+  .cues span:nth-child(2) {
+    display: none;
+  }
+  .cues {
+    top: calc(var(--header-h) + 2px);
+  }
+  .meta {
+    display: none;
+  }
+  .lede {
+    font-size: 1rem;
+  }
+}

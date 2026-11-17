@@ -1,0 +1,195 @@
+.section {
+  --sv-bg: 247 246 243;
+  --sv-ink: 21 23 27;
+  --sv-ink-mid: 90 95 105;
+  --sv-raise: 255 255 255;
+  --sv-sh: 38 46 64;
+  --sv-line: 21 23 27;
+  position: relative;
+  z-index: 2;
+  height: 400vh;
+  color: rgb(var(--sv-ink));
+  background: rgb(var(--sv-bg));
+}
+.pin {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: clip;
+}
+.bg {
+  position: absolute;
+  inset: 0;
+  background: rgb(var(--sv-bg));
+}
+.canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.canvasEl {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.inner {
+  position: relative;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: var(--gutter);
+  padding-top: calc(var(--header-h) + 3vh);
+  padding-bottom: 4vh;
+}
+.left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  pointer-events: none;
+}
+.head {
+  color: rgb(var(--sv-ink-mid));
+}
+.title {
+  margin-top: 2vh;
+  max-width: 9ch;
+}
+.word {
+  display: inline-block;
+  white-space: nowrap;
+}
+.glyph {
+  display: inline-block;
+}
+.sub {
+  max-width: 32ch;
+  color: rgb(var(--sv-ink-mid));
+  font-size: var(--fs-body);
+}
+.cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(3, 1fr);
+  gap: clamp(10px, 1.2vw, 18px);
+  min-height: 0;
+}
+.card {
+  --settle: 0;
+  --draw: 1;
+  position: relative;
+  border-radius: 10px;
+  padding: clamp(14px, 1.4vw, 22px);
+  background: rgb(var(--sv-raise));
+  /* elevation interpolates --elev-1 → --elev-2 with --settle; tint inverts to light halos */
+  box-shadow: 0 calc(1px + var(--settle) * 1px) calc(2px + var(--settle) * 2px) rgb(var(--sv-sh) / calc(0.05 + var(--settle) * 0.01)),
+    0 calc(2px + var(--settle) * 6px) calc(8px + var(--settle) * 16px) rgb(var(--sv-sh) / calc(0.04 + var(--settle) * 0.03)),
+    0 1px 0 rgb(255 255 255 / calc(0.8 * var(--settle))) inset;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  opacity: 0;
+}
+.border {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.border rect {
+  fill: none;
+  stroke: rgb(var(--sv-line) / 0.22);
+  stroke-width: 1;
+  stroke-dasharray: 1;
+  stroke-dashoffset: var(--draw);
+  vector-effect: non-scaling-stroke;
+}
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+  color: rgb(var(--sv-ink-mid));
+}
+.cardStack {
+  opacity: 0.8;
+}
+.cardTitle {
+  margin-top: auto;
+  font-size: clamp(1.125rem, 1.55vw, 1.5rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.cardBody {
+  margin-top: 8px;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: rgb(var(--sv-ink-mid));
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.scope {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  margin-top: 10px;
+  color: rgb(var(--sv-ink-mid));
+}
+.sheets {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  pointer-events: none;
+  z-index: 5;
+}
+.sheet {
+  background: var(--paper);
+  transform: scaleY(0);
+  transform-origin: 50% 100%;
+  box-shadow: 0 -10px 30px hsl(var(--sh) / 0.08), 0 -2px 6px hsl(var(--sh) / 0.06);
+  margin-right: -1px;
+}
+
+@media (max-width: 1024px) {
+  .section {
+    height: 250vh;
+  }
+  .inner {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    padding-top: calc(var(--header-h) + 2vh);
+  }
+  .left {
+    gap: 12px;
+  }
+  .title {
+    font-size: clamp(2rem, 8vw, 3.25rem);
+  }
+  .sub {
+    display: none;
+  }
+  .cards {
+    margin-top: 30vh;
+  }
+  .cardBody,
+  .scope,
+  .cardStack {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section {
+    height: auto;
+  }
+  .pin {
+    position: relative;
+    height: auto;
+    min-height: 100svh;
+  }
+}

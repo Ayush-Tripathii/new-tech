@@ -1,0 +1,124 @@
+.head {
+  padding-top: calc(var(--header-h) + 12vh);
+  padding-bottom: 6vh;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: var(--paper-raise);
+  box-shadow: var(--elev-1);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background-color var(--t-fast), color var(--t-fast), box-shadow var(--t-fast);
+}
+.chip[aria-pressed='true'] {
+  background: var(--ink);
+  color: var(--paper);
+  box-shadow: var(--elev-2);
+}
+.count {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  opacity: 0.6;
+}
+.listWrap {
+  position: relative;
+  padding-bottom: var(--section-pad);
+}
+.list {
+  position: relative;
+  border-top: 1px solid var(--line);
+}
+.bar {
+  position: absolute;
+  left: var(--margin);
+  right: var(--margin);
+  top: 0;
+  height: 0;
+  background: var(--paper-raise);
+  box-shadow: var(--elev-1);
+  opacity: 0;
+  pointer-events: none;
+  border-radius: 4px;
+}
+.rowItem {
+  position: relative;
+  border-bottom: 1px solid var(--line);
+}
+.row {
+  display: grid;
+  grid-template-columns: 48px 4fr 3fr 1.4fr 0.8fr 24px;
+  align-items: center;
+  gap: var(--gutter);
+  padding: clamp(18px, 2.4vw, 32px) 12px;
+}
+.name {
+  font-size: clamp(1.5rem, 3vw, 2.75rem);
+  font-weight: 400;
+  letter-spacing: -0.03em;
+}
+.rowArrow {
+  justify-self: end;
+}
+.list:has(.row:hover) .row:not(:hover) {
+  opacity: 0.4;
+  filter: blur(1px);
+}
+.row {
+  transition: opacity var(--t-fast) var(--ease-out-quart), filter var(--t-fast);
+}
+.preview {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 50;
+  width: clamp(240px, 24vw, 420px);
+  aspect-ratio: 3 / 2;
+  pointer-events: none;
+}
+.previewClip {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  clip-path: inset(50% 50% 50% 50%);
+  /* floats above the list convincingly */
+  box-shadow: var(--elev-3);
+  background: var(--paper-sink);
+}
+.previewClip img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity var(--t-fast);
+}
+
+@media (max-width: 900px) {
+  .row {
+    grid-template-columns: 32px 1fr auto;
+  }
+  .client,
+  .row > :nth-child(5) {
+    display: none;
+  }
+  .rowArrow {
+    display: none;
+  }
+  .preview {
+    display: none;
+  }
+}

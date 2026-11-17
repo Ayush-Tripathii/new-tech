@@ -1,0 +1,382 @@
+/* ==========================================================================
+   GBGTech — design system (light)
+   Every colour, shadow, duration and ease used anywhere lives here.
+   ========================================================================== */
+
+:root {
+  /* ---- Colour ---------------------------------------------------------- */
+  --paper: #f7f6f3;        /* primary ground — warm bone, never #fff      */
+  --paper-raise: #ffffff;  /* elevated surfaces only                      */
+  --paper-sink: #edebe6;   /* recessed wells                              */
+  --ink: #15171b;          /* never pure #000                             */
+  --ink-mid: #5a5f69;
+  /* #9BA0A9 measures 2.5:1 on --paper — fails §14. Raised to #696E77
+     (4.8:1 on --paper, 5.1:1 on --paper-raise). Original kept as
+     --ink-ghost, decorative-only (never for text). */
+  --ink-faint: #696e77;
+  --ink-ghost: #9ba0a9;
+  --line: rgba(21, 23, 27, 0.1);
+  --line-strong: rgba(21, 23, 27, 0.22);
+
+  --signal: #1f3bff;       /* interactive affordances ONLY                */
+  --signal-soft: rgba(31, 59, 255, 0.08);
+  --warn: #d9480f;
+  --invert-ink: #0b0c0f;
+
+  /* ---- Shadow — one implied light source, top-left, always tinted ----- */
+  --shadow-tint: 218;
+  --sh: 218 25% 20%;
+  --elev-0: 0 0 0 transparent;
+  --elev-1: 0 1px 2px hsl(var(--sh) / 0.05), 0 2px 8px hsl(var(--sh) / 0.04);
+  --elev-2: 0 2px 4px hsl(var(--sh) / 0.06), 0 8px 24px hsl(var(--sh) / 0.07),
+    0 1px 0 hsl(0 0% 100% / 0.8) inset;
+  --elev-3: 0 4px 8px hsl(var(--sh) / 0.07), 0 16px 48px hsl(var(--sh) / 0.1),
+    0 32px 80px hsl(var(--sh) / 0.06);
+  --elev-well: inset 0 1px 2px hsl(var(--sh) / 0.08), inset 0 0 0 1px hsl(var(--sh) / 0.04),
+    0 1px 0 hsl(0 0% 100% / 0.9);
+
+  /* ---- Type ------------------------------------------------------------ */
+  --font-sans: var(--ff-sans), 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: var(--ff-mono), ui-monospace, 'SFMono-Regular', monospace;
+  --font-serif: var(--ff-serif), Georgia, serif;
+  --fs-mega: clamp(3.5rem, 11vw, 14rem);
+  --fs-h1: clamp(2.5rem, 6vw, 5.5rem);
+  --fs-h2: clamp(1.75rem, 3.5vw, 3rem);
+  --fs-h3: clamp(1.25rem, 1.8vw, 1.625rem);
+  --fs-body: clamp(1rem, 1.1vw, 1.125rem);
+  --fs-small: 0.875rem;
+  --fs-label: 0.6875rem;
+
+  /* ---- Motion tokens --------------------------------------------------- */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
+  --ease-seat: cubic-bezier(0.34, 1.4, 0.64, 1);
+  --ease-mech: cubic-bezier(0.7, 0, 0.2, 1);
+  --t-instant: 0.15s;
+  --t-fast: 0.3s;
+  --t-base: 0.6s;
+  --t-slow: 0.9s;
+  --t-cine: 1.4s;
+  --t-epic: 2.2s;
+
+  /* ---- Grid ------------------------------------------------------------ */
+  --cols: 12;
+  --gutter: clamp(16px, 2vw, 32px);
+  --margin: clamp(16px, 3.2vw, 56px);
+  --max: 1680px;
+  --section-pad: clamp(115px, 16.8vh, 264px); /* +20% over dark baseline */
+  --radius: 8px;
+  --radius-lg: 14px;
+
+  --header-h: 72px;
+  color-scheme: light;
+}
+
+@media (max-width: 768px) {
+  /* Shadows ~60% blur & alpha at phone scale — --elev-3 otherwise reads as a halo */
+  :root {
+    --elev-2: 0 1px 2px hsl(var(--sh) / 0.05), 0 5px 14px hsl(var(--sh) / 0.05),
+      0 1px 0 hsl(0 0% 100% / 0.8) inset;
+    --elev-3: 0 2px 5px hsl(var(--sh) / 0.05), 0 10px 29px hsl(var(--sh) / 0.07),
+      0 19px 48px hsl(var(--sh) / 0.04);
+    --header-h: 60px;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --line: var(--line-strong);
+    --ink-faint: var(--ink-mid);
+    --ink-mid: #3d414a;
+  }
+  .raise,
+  [data-raise] {
+    outline: 1px solid var(--line-strong);
+  }
+}
+
+/* ==========================================================================
+   Reset
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background: var(--paper);
+}
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  font-weight: 450;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: 'ss01', 'cv11';
+  overflow-x: clip;
+}
+img,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+button {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+figure,
+blockquote {
+  margin: 0;
+  padding: 0;
+}
+ul,
+ol {
+  list-style: none;
+}
+::selection {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* ==========================================================================
+   Focus — 2px signal ring + 1px white outer ring: visible on paper AND ink
+   ========================================================================== */
+:focus {
+  outline: none;
+}
+:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px #fff;
+  border-radius: 2px;
+}
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 10000;
+  padding: 10px 16px;
+  background: var(--paper-raise);
+  box-shadow: var(--elev-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transform: translateY(-160%);
+  transition: transform var(--t-fast) var(--ease-out-quart);
+}
+.skip-link:focus-visible {
+  transform: none;
+}
+
+/* ==========================================================================
+   Type primitives
+   ========================================================================== */
+.display {
+  font-weight: 340;
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  font-variation-settings: 'wght' 340;
+}
+.mega {
+  font-size: var(--fs-mega);
+}
+.h1 {
+  font-size: var(--fs-h1);
+  font-weight: 380;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+.h2 {
+  font-size: var(--fs-h2);
+  font-weight: 420;
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+}
+.h3 {
+  font-size: var(--fs-h3);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+}
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  font-weight: 450;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+.faint {
+  color: var(--ink-faint);
+}
+.mid {
+  color: var(--ink-mid);
+}
+.lede {
+  font-size: clamp(1.125rem, 1.5vw, 1.375rem);
+  line-height: 1.55;
+  font-weight: 450;
+  color: var(--ink-mid);
+  max-width: 38ch;
+}
+.serif {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  letter-spacing: -0.01em;
+}
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   Layout
+   ========================================================================== */
+.wrap {
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: var(--margin);
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  column-gap: var(--gutter);
+}
+.section {
+  position: relative;
+  padding-block: var(--section-pad);
+}
+.hairline {
+  height: 1px;
+  background: var(--line);
+  border: 0;
+  margin: 0;
+}
+
+/* Raised surface — reads as lifted through shadow, not a border */
+.raise {
+  background: var(--paper-raise);
+  box-shadow: var(--elev-2);
+  border-radius: var(--radius);
+}
+/* Recessed well */
+.sink {
+  background: var(--paper-sink);
+  box-shadow: var(--elev-well);
+  border-radius: var(--radius);
+}
+
+/* ==========================================================================
+   Global dither — law 5. Applied over everything (incl. WebGL canvas).
+   ========================================================================== */
+.dither {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  pointer-events: none;
+  background-image: var(--noise-url, url('/noise.png'));
+  background-size: 128px 128px;
+  opacity: 0.025;
+  mix-blend-mode: multiply;
+}
+.dither-local {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: var(--noise-url, url('/noise.png'));
+  background-size: 128px 128px;
+  opacity: 0.025;
+  mix-blend-mode: multiply;
+}
+
+/* Cursor-on: hide native cursor except where text entry needs it */
+html.has-cursor,
+html.has-cursor a,
+html.has-cursor button,
+html.has-cursor [role='button'] {
+  cursor: none;
+}
+html.has-cursor input,
+html.has-cursor textarea,
+html.has-cursor select {
+  cursor: text;
+}
+
+/* Page shell — transforms only during transitions; cleared afterwards so
+   position: sticky / fixed descendants behave. */
+#page {
+  position: relative;
+  transform-origin: 50% 40vh;
+}
+
+/* Generic reveal helpers used by primitives */
+.line-mask {
+  display: block;
+  overflow: clip;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+.line-mask > * {
+  display: block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}

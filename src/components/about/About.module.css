@@ -1,0 +1,199 @@
+.hero {
+  padding-top: calc(var(--header-h) + 8vh);
+  padding-bottom: 8vh;
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: calc(var(--gutter) * 2);
+  align-items: end;
+  min-height: 100svh;
+}
+.heroCopy {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding-bottom: 4vh;
+}
+.title {
+  font-size: clamp(3rem, 7.2vw, 9.5rem);
+}
+.heroCopy :global(.serif) {
+  font-style: italic;
+  font-weight: 200;
+}
+.portrait {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--elev-3);
+  background: var(--paper-sink);
+  perspective: 1400px;
+  touch-action: pan-x;
+}
+.portraitCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.strips {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+}
+.strip {
+  --lift: 0;
+  position: relative;
+  /* vellum: the still life ghosts through; peeling reveals it crisp */
+  background: rgb(255 255 255 / 0.74);
+  -webkit-backdrop-filter: blur(7px) saturate(0.85);
+  backdrop-filter: blur(7px) saturate(0.85);
+  margin-right: -1px;
+  transform-origin: 50% 0%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 16px;
+  cursor: grab;
+  /* paper sheets with real drop shadows that deepen as they lift */
+  box-shadow: 0 calc(1px + var(--lift) * 10px) calc(2px + var(--lift) * 28px) hsl(var(--sh) / calc(0.04 + var(--lift) * 0.14)),
+    0 calc(var(--lift) * 30px) calc(var(--lift) * 60px) hsl(var(--sh) / calc(var(--lift) * 0.1)), 0 1px 0 hsl(0 0% 100%) inset;
+  border-right: 1px solid hsl(var(--sh) / 0.04);
+}
+.strip:active {
+  cursor: grabbing;
+}
+.peelHint {
+  position: absolute;
+  top: 16px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  pointer-events: none;
+}
+.story {
+  display: grid;
+  grid-template-columns: 3fr 9fr;
+  gap: calc(var(--gutter) * 2);
+  row-gap: 64px;
+}
+.storyText {
+  font-size: clamp(1.5rem, 2.8vw, 2.75rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+}
+.nums {
+  grid-column: 2;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gutter);
+}
+.nums > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px solid var(--line);
+  padding-top: 20px;
+}
+.num {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 340;
+  letter-spacing: -0.04em;
+}
+.team {
+  position: relative;
+  margin-top: 32px;
+  min-height: 560px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 260px));
+  justify-content: space-around;
+  align-content: center;
+  gap: 32px;
+  padding: 24px;
+  background: var(--paper-sink);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--elev-well);
+}
+.teamCard {
+  background: var(--paper-raise);
+  border-radius: var(--radius);
+  box-shadow: var(--elev-2);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  touch-action: none;
+  user-select: none;
+}
+.avatar {
+  aspect-ratio: 1;
+  border-radius: 6px;
+  margin-bottom: 12px;
+  display: grid;
+  place-items: center;
+  font-size: 2.5rem;
+  font-weight: 300;
+  letter-spacing: -0.04em;
+  color: var(--ink-mid);
+  background: radial-gradient(120% 90% at 30% 20%, #fbfaf7, #e4dfd5 60%, #cfc9be);
+  box-shadow: inset 0 -12px 30px hsl(var(--sh) / 0.08);
+}
+.teamName {
+  font-weight: 500;
+}
+.cultureTitle {
+  margin-block: 20px 6vh;
+}
+.wallWrap {
+  --wall-tint: transparent;
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.wallTint {
+  position: absolute;
+  inset: 0;
+  background: var(--wall-tint);
+  opacity: 0.07;
+  transition: background-color var(--t-base) var(--ease-out-quart);
+  pointer-events: none;
+}
+.wall {
+  position: relative;
+  height: clamp(640px, 90vh, 980px);
+}
+.shot {
+  position: absolute;
+  margin: 0;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: var(--elev-2);
+  transition: box-shadow var(--t-fast) var(--ease-out-quart), transform var(--t-fast) var(--ease-out-quart);
+}
+.shot:hover {
+  box-shadow: var(--elev-3);
+  transform: translateY(-6px);
+  z-index: 2;
+}
+.shot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+  .story {
+    grid-template-columns: 1fr;
+  }
+  .nums {
+    grid-column: 1;
+    grid-template-columns: 1fr;
+  }
+  .team {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

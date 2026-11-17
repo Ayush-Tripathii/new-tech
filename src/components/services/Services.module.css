@@ -1,0 +1,170 @@
+.hero {
+  position: relative;
+  height: 100svh;
+  min-height: 600px;
+  overflow: clip;
+}
+.swarm {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.heroCopy {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 24px;
+  padding-bottom: 8vh;
+  pointer-events: none;
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--gutter);
+}
+.card {
+  padding: clamp(24px, 3vw, 44px);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-height: 340px;
+}
+.cardHead {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--ink-mid);
+}
+.scope {
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.scope li {
+  font-size: 0.8125rem;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--paper-sink);
+  box-shadow: var(--elev-well);
+}
+.split {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: calc(var(--gutter) * 2);
+}
+.split > div:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.acc {
+  border-top: 1px solid var(--line);
+}
+.accRow {
+  border-bottom: 1px solid var(--line);
+}
+.accBtn {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 48px 1fr 20px;
+  align-items: center;
+  padding: 24px 0;
+  text-align: left;
+}
+.accTitle {
+  font-size: var(--fs-h3);
+  font-weight: 450;
+  letter-spacing: -0.015em;
+}
+.plus {
+  position: relative;
+  width: 14px;
+  height: 14px;
+}
+.plus::before,
+.plus::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1.4px;
+  background: currentColor;
+  transition: transform var(--t-base) var(--ease-out-expo);
+}
+.plus::after {
+  transform: rotate(90deg);
+}
+.accRow[data-open='1'] .plus::after {
+  transform: rotate(0deg);
+}
+.accPanel {
+  overflow: hidden;
+}
+.accItems {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 24px;
+  padding: 0 0 28px 48px;
+  color: var(--ink-mid);
+}
+.processTitle {
+  margin-block: 20px 8vh;
+}
+.process {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10vh;
+  padding-left: 56px;
+}
+.track {
+  position: absolute;
+  left: 7px;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  background: var(--line);
+}
+.trackLine {
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  transform-origin: 50% 0;
+  transform: scaleY(0);
+}
+.step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 52ch;
+}
+.dot {
+  position: absolute;
+  left: -56px;
+  top: 2px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--paper-raise);
+  box-shadow: var(--elev-2), inset 0 0 0 1.5px var(--ink);
+}
+.ctaCard {
+  padding: clamp(32px, 5vw, 72px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+@media (max-width: 900px) {
+  .cards,
+  .split {
+    grid-template-columns: 1fr;
+  }
+}
